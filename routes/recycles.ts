@@ -14,7 +14,7 @@ export const getRecycleItem = () => (req: Request, res: Response) => {
       id: JSON.parse(req.params.id)
     }
   }).then((Recycle) => {
-    return res.send(utils.queryResultToJson(Recycle))
+    return res.json(utils.queryResultToJson(Recycle)) // Changed from res.send to res.json
   }).catch((_: unknown) => {
     return res.send('Error fetching recycled items. Please try again')
   })
