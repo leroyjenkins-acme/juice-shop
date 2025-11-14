@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
     this.user.password = this.passwordControl.value
     this.userService.login(this.user).subscribe({
       next: (authentication: any) => {
-        localStorage.setItem('token', authentication.token)
+        sessionStorage.setItem('token', authentication.token) // Changed from localStorage to sessionStorage
         const expires = new Date()
         expires.setHours(expires.getHours() + 8)
         this.cookieService.put('token', authentication.token, { expires })
@@ -101,11 +101,11 @@ export class LoginComponent implements OnInit {
       },
       error: ({ error }) => {
         if (error.status && error.data && error.status === 'totp_token_required') {
-          localStorage.setItem('totp_tmp_token', error.data.tmpToken)
+          sessionStorage.setItem('totp_tmp_token', error.data.tmpToken) // Changed from localStorage to sessionStorage
           this.ngZone.run(async () => await this.router.navigate(['/2fa/enter']))
           return
         }
-        localStorage.removeItem('token')
+        sessionStorage.removeItem('token') // Changed from localStorage to sessionStorage
         this.cookieService.remove('token')
         sessionStorage.removeItem('bid')
         this.error = error
@@ -116,9 +116,9 @@ export class LoginComponent implements OnInit {
     })
 
     if (this.rememberMe.value) {
-      localStorage.setItem('email', this.user.email)
+      sessionStorage.setItem('email', this.user.email) // Changed from localStorage to sessionStorage
     } else {
-      localStorage.removeItem('email')
+      sessionStorage.removeItem('email') // Changed from localStorage to sessionStorage
     }
   }
 
