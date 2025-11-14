@@ -29,7 +29,7 @@ jobs:
         id: Xygeni-Scanner
         with:
           command: -v scan --run=sast --auto-remediate --no-upload --format none
-          xygeni_url: https://api.xygeni.io
+          xygeni_url: https://apidemo.xygeni.io/deps-doctor-service
           token: ${{ secrets.XYGENI_TOKEN }}
           # run PR from actions should be enabled
           gh_token: ${{ secrets.GITHUB_TOKEN }} 
