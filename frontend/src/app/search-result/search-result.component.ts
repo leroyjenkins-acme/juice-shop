@@ -158,7 +158,7 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
         this.io.socket().emit('verifyLocalXssChallenge', queryParam)
       }) // vuln-code-snippet hide-end
       this.dataSource.filter = queryParam.toLowerCase()
-      this.searchValue = this.sanitizer.bypassSecurityTrustHtml(queryParam) // vuln-code-snippet vuln-line localXssChallenge xssBonusChallenge
+      this.searchValue = this.sanitizeInput(queryParam) // Fix: Use a custom method to sanitize the input
       this.gridDataSource.subscribe((result: any) => {
         if (result.length === 0) {
           this.emptyState = true
@@ -285,5 +285,10 @@ export class SearchResultComponent implements OnDestroy, AfterViewInit {
 
   isDeluxe () {
     return this.deluxeGuard.isDeluxe()
+  }
+
+  private sanitizeInput(input: string): SafeHtml {
+    // Implement a proper sanitization method here
+    return this.sanitizer.sanitize(1, input) || '';
   }
 }
