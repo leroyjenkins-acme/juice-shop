@@ -90,7 +90,8 @@ export class ChatbotComponent implements OnInit, OnDestroy {
     })
     this.currentAction = this.messageActions[response.action]
     if (response.token) {
-      localStorage.setItem('token', response.token)
+      // Store token in a more secure way
+      sessionStorage.setItem('token', response.token)
       const expires = new Date()
       expires.setHours(expires.getHours() + 8)
       this.cookieService.put('token', response.token, { expires })
