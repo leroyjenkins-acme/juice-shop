@@ -205,7 +205,7 @@ export class FaucetComponent {
       console.log('session', this.session)
       this.changeDetectorRef.detectChanges()
     } catch (err) {
-      console.log(err)
+      console.error('An error occurred during authentication.')
     }
   }
 
