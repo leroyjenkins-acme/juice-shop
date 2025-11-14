@@ -26,9 +26,10 @@ export function profileImageUrlUpload () {
             throw new Error('url returned a non-OK status code or an empty body')
           }
           const ext = ['jpg', 'jpeg', 'png', 'svg', 'gif'].includes(url.split('.').slice(-1)[0].toLowerCase()) ? url.split('.').slice(-1)[0].toLowerCase() : 'jpg'
-          const fileStream = fs.createWriteStream(`frontend/dist/frontend/assets/public/images/uploads/${loggedInUser.data.id}.${ext}`, { flags: 'w' })
+          const safeFileName = `${loggedInUser.data.id}.${ext}`.replace(/[^a-zA-Z0-9.]/g, '_')
+          const fileStream = fs.createWriteStream(`frontend/dist/frontend/assets/public/images/uploads/${safeFileName}`, { flags: 'w' })
           await finished(Readable.fromWeb(response.body as any).pipe(fileStream))
-          await UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: `/assets/public/images/uploads/${loggedInUser.data.id}.${ext}` }) }).catch((error: Error) => { next(error) })
+          await UserModel.findByPk(loggedInUser.data.id).then(async (user: UserModel | null) => { return await user?.update({ profileImage: `/assets/public/images/uploads/${safeFileName}` }) }).catch((error: Error) => { next(error) })
         } catch (error) {
           try {
             const user = await UserModel.findByPk(loggedInUser.data.id)
