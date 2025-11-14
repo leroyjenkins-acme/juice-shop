@@ -35,7 +35,7 @@ export class LoginGuard implements CanActivate {
       try {
         payload = jwtDecode(token)
       } catch (err) {
-        console.log(err)
+        console.error('Token decoding failed') // Changed from console.log(err)
       }
     }
     return payload
