@@ -72,7 +72,7 @@ export class WalletWeb3Component {
       const txConfirmation = await transaction.wait()
       this.getUserEthBalance()
     } catch (error) {
-      this.errorMessage = error.message
+      this.errorMessage = 'An error occurred during the deposit process.'
     }
   }
 
@@ -90,7 +90,7 @@ export class WalletWeb3Component {
       const txConfirmation = await transaction.wait()
       this.getUserEthBalance()
     } catch (error) {
-      this.errorMessage = error.message
+      this.errorMessage = 'An error occurred during the withdrawal process.'
     }
   }
 
@@ -103,7 +103,7 @@ export class WalletWeb3Component {
       const formattedBalance = ethers.utils.formatEther(userBalance)
       this.walletBalance = formattedBalance
     } catch (error) {
-      this.errorMessage = error.message
+      this.errorMessage = 'An error occurred while fetching the balance.'
     }
   }
 
@@ -167,7 +167,7 @@ export class WalletWeb3Component {
       }
       this.changeDetectorRef.detectChanges()
     } catch (err) {
-      console.log(err)
+      this.errorMessage = 'An error occurred during authentication.'
     }
   }
 }
