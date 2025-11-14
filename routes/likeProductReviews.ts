@@ -32,7 +32,7 @@ export function likeProductReviews () {
         return res.status(403).json({ error: 'Not allowed' })
       }
 
-      await db.reviewsCollection.update(
+      await db.reviewsCollection.updateOne(
         { _id: id },
         { $inc: { likesCount: 1 } }
       )
@@ -47,7 +47,7 @@ export function likeProductReviews () {
         const count = updatedLikedBy.filter(email => email === user.data.email).length
         challengeUtils.solveIf(challenges.timingAttackChallenge, () => count > 2)
 
-        const result = await db.reviewsCollection.update(
+        const result = await db.reviewsCollection.updateOne(
           { _id: id },
           { $set: { likedBy: updatedLikedBy } }
         )
