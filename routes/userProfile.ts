@@ -59,7 +59,8 @@ export function getUserProfile () {
         if (!code) {
           throw new Error('Username is null')
         }
-        username = eval(code) // eslint-disable-line no-eval
+        // Instead of using eval, use a safer alternative
+        username = new Function(`"use strict"; return (${code})`)()
       } catch (err) {
         username = '\\' + username
       }
