@@ -244,7 +244,9 @@ async function createRandomFakeUsers () {
     let text = ''
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
-    for (let i = 0; i < length; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
+    // Use a cryptographically secure random number generator
+    const crypto = require('crypto')
+    for (let i = 0; i < length; i++) { text += possible.charAt(crypto.randomInt(0, possible.length)) }
 
     return text
   }
