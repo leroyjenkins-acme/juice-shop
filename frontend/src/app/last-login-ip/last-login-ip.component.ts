@@ -24,7 +24,7 @@ export class LastLoginIpComponent {
     try {
       this.parseAuthToken()
     } catch (err) {
-      console.log(err)
+      console.error('An error occurred while parsing the auth token.') // Avoid exposing sensitive information
     }
   }
 
@@ -34,8 +34,7 @@ export class LastLoginIpComponent {
     if (token) {
       payload = jwtDecode(token)
       if (payload.data.lastLoginIp) {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        this.lastLoginIp = this.sanitizer.bypassSecurityTrustHtml(`<small>${payload.data.lastLoginIp}</small>`)
+        this.lastLoginIp = this.sanitizer.sanitize(1, `<small>${payload.data.lastLoginIp}</small>`) // Sanitize the HTML content
       }
     }
   }
